@@ -15,6 +15,7 @@ const navItems = [
   { href: '/products', label: 'Products' },
   { href: '/selection-guide', label: 'Selection Guide' },
   { href: '/resources', label: 'Resources' },
+  { href: '/blog', label: 'Blog' },
   { href: '/customers', label: 'Customers' },
   { href: '/contact', label: 'Contact Us' },
 ];
@@ -29,7 +30,6 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    // Close mobile menu on path change
     if (isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
     }
@@ -37,7 +37,6 @@ export default function Navbar() {
   }, [pathname]);
 
   if (!isMounted) {
-    // Render a placeholder or null on the server to avoid hydration mismatch for Sheet
     return (
       <header className="bg-card shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

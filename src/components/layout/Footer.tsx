@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import Logo from '@/components/icons/Logo';
@@ -23,6 +24,8 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/products" className="text-muted-foreground hover:text-primary transition-colors">Products</Link></li>
               <li><Link href="/selection-guide" className="text-muted-foreground hover:text-primary transition-colors">Selection Guide</Link></li>
+              <li><Link href="/resources" className="text-muted-foreground hover:text-primary transition-colors">Resources</Link></li>
+              <li><Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</Link></li>
               <li><Link href="/customers" className="text-muted-foreground hover:text-primary transition-colors">Customers</Link></li>
               <li><Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact Us</Link></li>
             </ul>
