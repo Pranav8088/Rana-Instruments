@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
@@ -6,8 +7,51 @@ import Footer from '@/components/layout/Footer';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Rana Instrument Solutions',
-  description: 'Quality Parts, Expert Services & Invaluable Experience',
+  title: {
+    default: 'Rana Instrument Solutions',
+    template: '%s | Rana Instrument Solutions',
+  },
+  description: 'Quality Parts, Expert Services & Invaluable Experience. Premier manufacturer of precision measuring instruments including bore gauges, verniers, probes, and custom solutions.',
+  keywords: ['precision measuring instruments', 'bore gauges', 'verniers', 'probes', 'custom gauges', 'metrology', 'Rana Instrument'],
+  openGraph: {
+    title: 'Rana Instrument Solutions',
+    description: 'Premier manufacturer of precision measuring instruments.',
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://your-website-url.com', // Replace with your actual URL
+    siteName: 'Rana Instrument Solutions',
+    images: [
+      {
+        url: 'https://your-website-url.com/og-image.png', // Replace with your actual OG image URL
+        width: 1200,
+        height: 630,
+        alt: 'Rana Instrument Solutions',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rana Instrument Solutions',
+    description: 'Premier manufacturer of precision measuring instruments.',
+    // images: ['https://your-website-url.com/twitter-image.png'], // Replace with your actual Twitter image URL
+    // site: '@yourTwitterHandle', // Optional: Replace with your Twitter handle
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  // icons: { // Add favicon configuration if you have one
+  //   icon: '/favicon.ico',
+  //   shortcut: '/favicon-16x16.png',
+  //   apple: '/apple-touch-icon.png',
+  // },
 };
 
 export default function RootLayout({
@@ -22,7 +66,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={cn("font-body antialiased min-h-screen flex flex-col")}>
+      <body className={cn("font-body antialiased min-h-screen flex flex-col bg-background")}>
         <Navbar />
         <main className="flex-grow">
           {children}
