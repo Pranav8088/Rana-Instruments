@@ -1,9 +1,11 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Eye } from 'lucide-react';
+import { Eye, ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface ProductCardProps {
   product: Product;
@@ -11,21 +13,23 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <Card className="flex flex-col h-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out group border border-border/70 hover:border-primary/50">
+    <Card className="flex flex-col h-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out group border border-border/70 hover:border-primary/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
       <CardHeader className="p-0">
-        <div className="relative w-full h-52 sm:h-56 bg-muted overflow-hidden rounded-t-lg">
-          <Image
-            src={product.image}
-            alt={product.name}
-            layout="fill"
-            objectFit="cover"
-            className="transform transition-transform duration-500 group-hover:scale-105"
-            data-ai-hint={product.aiHint || product.category.toLowerCase()}
-          />
-        </div>
+        <Link href={`/products/${product.id}`} className="block focus:outline-none rounded-t-lg" tabIndex={-1}>
+          <div className="relative w-full h-52 sm:h-56 bg-muted overflow-hidden rounded-t-lg">
+            <Image
+              src={product.image}
+              alt={product.name}
+              layout="fill"
+              objectFit="cover"
+              className="transform transition-transform duration-500 group-hover:scale-105"
+              data-ai-hint={product.aiHint || product.category.toLowerCase()}
+            />
+          </div>
+        </Link>
       </CardHeader>
       <CardContent className="p-5 flex-grow flex flex-col">
-        <p className="text-xs text-primary uppercase tracking-wider font-medium mb-1">{product.category}</p>
+        <Badge variant="outline" className="text-xs py-1 px-2.5 border-primary text-primary bg-primary/10 mb-2 self-start">{product.category}</Badge>
         <CardTitle className="text-lg font-headline mb-2 text-foreground group-hover:text-primary transition-colors">
           <Link href={`/products/${product.id}`} className="focus:outline-none">
             <span className="absolute inset-0" aria-hidden="true" />

@@ -11,7 +11,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Search, PackageSearch } from 'lucide-react';
+import { Search, PackageSearch, XCircle } from 'lucide-react';
 
 export default function ProductsPageClient() {
   const allProducts = productData.products;
@@ -31,7 +31,7 @@ export default function ProductsPageClient() {
 
   const displayedCategories = useMemo(() => {
     const uniqueCategories = new Set(filteredProducts.map(p => p.category as ProductCategory));
-    return Array.from(uniqueCategories);
+    return Array.from(uniqueCategories).sort(); // Sort categories alphabetically
   }, [filteredProducts]);
 
   const getCategorySlug = (categoryName: string) => {
@@ -45,43 +45,56 @@ export default function ProductsPageClient() {
         subtitle="Discover precision-engineered measuring instruments for every need." 
       />
 
-      <Card className="mb-8 md:mb-12 shadow-md rounded-lg">
+      <Card className="mb-8 md:mb-12 shadow-lg rounded-lg bg-card sticky top-20 z-40">
         <CardContent className="p-4 sm:p-6">
           <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
             <Input
               type="text"
-              placeholder="Search products by name, category, or description..."
+              placeholder="Search products by name, category, or keyword..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-3 text-base h-12 rounded-md"
+              className="pl-10 pr-10 py-3 text-base h-12 rounded-md border-border focus:border-primary"
               aria-label="Search products"
             />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            {searchTerm && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground hover:text-foreground"
+                onClick={() => setSearchTerm('')}
+                aria-label="Clear search"
+              >
+                <XCircle className="h-5 w-5" />
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
 
       {filteredProducts.length === 0 && searchTerm && (
-        <div className="text-center py-10">
-          <PackageSearch className="mx-auto h-16 w-16 text-muted-foreground mb-4" />
-          <p className="text-xl font-semibold text-foreground mb-2">No products found matching "{searchTerm}"</p>
-          <p className="text-muted-foreground">Try a different search term or clear the search to browse all products.</p>
-          <Button onClick={() => setSearchTerm('')} variant="outline" className="mt-6">
-            Clear Search
+        <div className="text-center py-10 md:py-16">
+          <PackageSearch className="mx-auto h-20 w-20 text-primary/70 mb-6" />
+          <p className="text-2xl font-semibold text-foreground mb-3">No products found</p>
+          <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+            We couldn't find any products matching "{searchTerm}". Try a different search term or clear the search to browse all products.
+          </p>
+          <Button onClick={() => setSearchTerm('')} variant="outline" size="lg">
+            Clear Search & View All Products
           </Button>
         </div>
       )}
 
       {filteredProducts.length > 0 && displayedCategories.length > 0 && (
         <Tabs defaultValue={getCategorySlug(displayedCategories[0])} className="w-full">
-          <div className="flex justify-center mb-8">
-            <ScrollArea className="max-w-full whitespace-nowrap rounded-md border">
-              <TabsList className="inline-flex h-auto p-1 bg-muted/50">
+          <div className="flex justify-center mb-8 sticky top-[calc(theme(spacing.20)_+_theme(spacing.12)_+_1rem)] md:top-[calc(theme(spacing.20)_+_theme(spacing.12)_-_0.5rem)] z-30 bg-background/80 backdrop-blur-sm py-2 -mx-4 px-4">
+             <ScrollArea className="max-w-full whitespace-nowrap rounded-md border border-border shadow-sm">
+              <TabsList className="inline-flex h-auto p-1 bg-muted/60">
                 {displayedCategories.map((category) => (
                   <TabsTrigger 
                     key={getCategorySlug(category)} 
                     value={getCategorySlug(category)}
-                    className="text-sm sm:text-base px-3 py-1.5 sm:px-4 sm:py-2 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-md"
+                    className="text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-md"
                   >
                     {category}
                   </TabsTrigger>
@@ -93,18 +106,22 @@ export default function ProductsPageClient() {
 
           {displayedCategories.map((category) => {
             const categoryProducts = filteredProducts.filter(p => p.category === category);
-            if (categoryProducts.length === 0) return null; 
+            if (categoryProducts.length === 0 && searchTerm) return null; // Don't render empty categories if searching
             return (
-              <TabsContent key={getCategorySlug(category)} value={getCategorySlug(category)} id={getCategorySlug(category)}>
+              <TabsContent key={getCategorySlug(category)} value={getCategorySlug(category)} id={getCategorySlug(category)} className="focus-visible:ring-0 focus-visible:ring-offset-0">
                 <section className="mb-12">
-                  <h3 className="text-2xl font-headline font-semibold text-primary mb-6 text-center sm:text-left">
+                  <h3 className="text-2xl font-headline font-semibold text-primary mb-6 text-center sm:text-left scroll-mt-28" id={getCategorySlug(category)+'-heading'}>
                     {category}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-                    {categoryProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
+                  {categoryProducts.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                      {categoryProducts.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                      ))}
+                    </div>
+                  ) : (
+                     <p className="text-muted-foreground text-center py-8">No products in this category match your search.</p>
+                  )}
                 </section>
               </TabsContent>
             );
