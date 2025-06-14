@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useFormStatus } from 'react'; // Updated import
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { submitContactForm } from '@/actions/contactActions';
@@ -40,7 +41,7 @@ function SubmitButton() {
 }
 
 export default function InquiryForm() {
-  const [state, formAction] = useFormState(submitContactForm, initialState);
+  const [state, formAction] = useActionState(submitContactForm, initialState); // Updated to useActionState
   const { toast } = useToast();
 
   const form = useForm<ContactFormData>({
