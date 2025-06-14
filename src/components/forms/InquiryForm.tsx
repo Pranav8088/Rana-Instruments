@@ -1,7 +1,8 @@
 
 'use client';
 
-import { useActionState, useFormStatus } from 'react'; // Updated import
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom'; // Corrected import for useFormStatus
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { submitContactForm } from '@/actions/contactActions';
@@ -41,7 +42,7 @@ function SubmitButton() {
 }
 
 export default function InquiryForm() {
-  const [state, formAction] = useActionState(submitContactForm, initialState); // Updated to useActionState
+  const [state, formAction] = useActionState(submitContactForm, initialState);
   const { toast } = useToast();
 
   const form = useForm<ContactFormData>({
@@ -60,10 +61,10 @@ export default function InquiryForm() {
       toast({
         title: "Message Sent!",
         description: state.message,
-        className: "bg-green-500 text-white",
+        className: "bg-green-500 text-white", // Note: direct color classes like bg-green-500 are generally discouraged in favor of theme variables. This can be reviewed later.
         duration: 5000,
       });
-      form.reset(); // Reset form fields on successful submission
+      form.reset(); 
     } else if (state.status === 'error' && state.message && !state.errors) {
        toast({
         variant: "destructive",
