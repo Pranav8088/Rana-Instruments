@@ -68,8 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}> {/* Apply font variable to HTML tag */}
-      <head>
+    <html lang="en" suppressHydrationWarning className={inter.variable}><head> {/* Apply font variable to HTML tag & No whitespace before head */}
         {/* Google Font <link> tags are removed as next/font handles it */}
       </head>
       <body className={cn("font-body antialiased min-h-screen flex flex-col bg-background")}>
