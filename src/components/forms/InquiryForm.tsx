@@ -3,7 +3,8 @@
 import { useFormState, useFormStatus } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { contactFormSchema, submitContactForm, type ContactFormState } from '@/actions/contactActions';
+import { submitContactForm } from '@/actions/contactActions';
+import { contactFormSchema, type ContactFormState } from '@/schemas/contactFormSchema';
 import type { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle, Loader2, AlertCircle } from 'lucide-react';
 import productData from '@/data/products';
 import { useEffect } from 'react';
