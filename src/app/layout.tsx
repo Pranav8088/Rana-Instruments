@@ -1,10 +1,18 @@
 
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google'; // Import next/font
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { cn } from '@/lib/utils';
+
+// Initialize Inter font
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap', // Ensures text remains visible during font loading
+  variable: '--font-inter', // Exposes a CSS variable
+});
 
 export const metadata: Metadata = {
   title: {
@@ -60,11 +68,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={inter.variable}> {/* Apply font variable to HTML tag */}
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        {/* Google Font <link> tags are removed as next/font handles it */}
       </head>
       <body className={cn("font-body antialiased min-h-screen flex flex-col bg-background")}>
         <Navbar />

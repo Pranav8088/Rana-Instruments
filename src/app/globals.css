@@ -1,10 +1,9 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Inter', sans-serif;
-}
+/* Removed: body { font-family: 'Inter', sans-serif; } as it's now handled by next/font and Tailwind's font-body utility */
 
 @layer base {
   :root {

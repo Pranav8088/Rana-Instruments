@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -87,6 +88,7 @@ export default function HomePage() {
                 objectFit="cover"
                 data-ai-hint="precision workshop"
                 className="transform transition-transform duration-500 hover:scale-105"
+                priority 
               />
             </div>
           </div>
