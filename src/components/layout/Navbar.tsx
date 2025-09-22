@@ -19,8 +19,7 @@ import { getAllCategories } from '@/data/products';
 
 const mainNavItems = [
   { href: '/', label: 'Home' },
-  // Products will be handled by the dropdown
-  { href: '/resources', label: 'Resources' },
+  { href: '/about', label: 'About Us' },
   { href: '/blog', label: 'Blog' },
   { href: '/customers', label: 'Customers' },
   { href: '/contact', label: 'Contact Us' },
@@ -129,8 +128,8 @@ export default function Navbar() {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
-            <MainNavLinks />
             <ProductDropdown />
+            <MainNavLinks />
           </nav>
 
           <div className="md:hidden">
