@@ -20,7 +20,6 @@ import { getAllCategories } from '@/data/products';
 const mainNavItems = [
   { href: '/', label: 'Home' },
   // Products will be handled by the dropdown
-  { href: '/selection-guide', label: 'Selection Guide' },
   { href: '/resources', label: 'Resources' },
   { href: '/blog', label: 'Blog' },
   { href: '/customers', label: 'Customers' },
