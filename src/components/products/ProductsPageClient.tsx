@@ -5,6 +5,7 @@ import { useState, useMemo } from 'react';
 import ProductCard from '@/components/products/ProductCard';
 import SectionTitle from '@/components/shared/SectionTitle';
 import productData from '@/data/products';
+import { getAllCategories } from '@/data/products';
 import type { ProductCategory } from '@/lib/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -24,15 +25,18 @@ export default function ProductsPageClient() {
       product.name.toLowerCase().includes(lowerSearchTerm) ||
       product.category.toLowerCase().includes(lowerSearchTerm) ||
       product.shortDescription.toLowerCase().includes(lowerSearchTerm) ||
-      (product.longDescription && product.longDescription.toLowerCase().includes(lowerSearchTerm)) ||
-      (product.productPortfolioText && product.productPortfolioText.toLowerCase().includes(lowerSearchTerm))
+      (product.longDescription && product.longDescription.toLowerCase().includes(lowerSearchTerm))
     );
   }, [allProducts, searchTerm]);
 
   const displayedCategories = useMemo(() => {
-    const uniqueCategories = new Set(filteredProducts.map(p => p.category as ProductCategory));
-    return Array.from(uniqueCategories).sort(); // Sort categories alphabetically
-  }, [filteredProducts]);
+    const allCategories = getAllCategories();
+    if (!searchTerm.trim()) return allCategories;
+
+    const uniqueCategoriesInFilter = new Set(filteredProducts.map(p => p.category as ProductCategory));
+    // Return in the order defined in getAllCategories, but only those present in filtered results
+    return allCategories.filter(cat => uniqueCategoriesInFilter.has(cat));
+  }, [filteredProducts, searchTerm]);
 
   const getCategorySlug = (categoryName: string) => {
     return categoryName.toLowerCase().replace(/\s+/g, '-');

@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { CheckCircle2, Settings, ArrowRight, Users, Package } from 'lucide-react';
+import { CheckCircle2, Settings, ArrowRight, Package } from 'lucide-react';
 import productData from '@/data/products';
+import { getAllCategories } from '@/data/products';
 
 const whyChooseUsItems = [
   {
@@ -30,7 +31,7 @@ const whyChooseUsItems = [
   },
 ];
 
-const productCategoriesPreview = Array.from(new Set(productData.products.map(p => p.category))).slice(0, 4);
+const productCategoriesPreview = getAllCategories().slice(0, 4);
 
 
 export default function HomePage() {
@@ -66,7 +67,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <SectionTitle title="About Rana Instruments" as="h2" className="text-left mb-6" />
+              <SectionTitle title="About Rana Instrument" as="h2" className="text-left mb-6" />
               <p className="text-lg text-foreground mb-4 leading-relaxed">
                 Rana Instrument is a premier manufacturer of precision measuring instruments, serving the automobile, oil & gas, fabrication, power, utility, and machining industries.
               </p>
@@ -82,7 +83,7 @@ export default function HomePage() {
             </div>
             <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="https://placehold.co/800x600.png"
+                src="https://picsum.photos/seed/workshop/800/600"
                 alt="Rana Instruments Workshop"
                 layout="fill"
                 objectFit="cover"

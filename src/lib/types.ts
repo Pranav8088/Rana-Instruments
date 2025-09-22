@@ -1,3 +1,4 @@
+
 export interface ModelVariant {
   modelNo: string;
   measuringRange: string;
@@ -11,7 +12,7 @@ export interface ModelVariant {
 export interface Product {
   id: string;
   name: string;
-  category: string;
+  category: ProductCategory;
   image: string;
   aiHint?: string; // For placeholder image search keyword
   shortDescription: string;
