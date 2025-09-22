@@ -4,34 +4,49 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { CheckCircle2, Settings, ArrowRight, Package } from 'lucide-react';
+import { CheckCircle, Settings, ArrowRight, Package, Wrench, GitBranch, ChevronDown } from 'lucide-react';
 import productData from '@/data/products';
 import { getAllCategories } from '@/data/products';
 
 const whyChooseUsItems = [
   {
+    icon: CheckCircle,
     title: 'Precision Engineered Solutions',
     description: 'We design and manufacture custom-built measuring instruments tailored to specific industrial applications, ensuring optimal accuracy and performance.',
   },
   {
+    icon: CheckCircle,
     title: 'High Accuracy & Longevity',
     description: 'Built with advanced metrology technology and premium-grade materials, our instruments guarantee repeatable precision, wear resistance, and long-term reliability in demanding environments.',
   },
   {
+    icon: CheckCircle,
     title: 'Optimized Cost-to-Performance Ratio',
     description: 'Our gauges deliver superior accuracy and durability while maintaining cost efficiency, providing high-value solutions for precision measurement needs.',
   },
   {
+    icon: CheckCircle,
     title: 'Comprehensive Service Support',
     description: 'We offer consultation, calibration, and after-sales support, ensuring seamless integration, maintenance, and long-term operational excellence.',
   },
   {
+    icon: CheckCircle,
     title: 'Industry-Specific Expertise',
     description: 'With extensive experience in automobile, oil & gas, fabrication, power, utility, and machining industries, we provide application-driven measurement solutions tailored to industry standards and operational requirements.',
   },
 ];
 
-const productCategoriesPreview = getAllCategories().slice(0, 4);
+
+const manufacturingCategories = {
+  "Bore Gauge": ["Right Angle", "300-900", "Long", "Flat", "800-1000", "Pitch", "180*", "90*", "Custom"],
+  "Groove Checking Gauges": ["Groove Diameter", "Groove Width", "C-type"],
+  "Ball Verniers": ["Digital", "Dial"],
+  "Probe": ["Faro probe", "Trimos Probe"]
+};
+
+const repairCategory = {
+  "Repairing of all types of gauges & instruments": []
+};
 
 
 export default function HomePage() {
@@ -96,36 +111,67 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* Product Categories Preview */}
+      {/* Product Classification Section */}
       <section className="py-16 md:py-24 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle title="Product Classification" subtitle="Explore our diverse range of precision instruments." />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {productCategoriesPreview.map((category) => (
-              <Card key={category} className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader className="items-center">
-                  <div className="p-3 bg-primary/10 rounded-full text-primary mb-3">
-                     <Package className="h-8 w-8" />
-                  </div>
-                  <CardTitle className="font-headline text-xl text-center">{category}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <p className="text-muted-foreground text-sm mb-4">
-                    High-quality {category.toLowerCase()} for various industrial applications.
-                  </p>
-                  <Button asChild variant="outline" size="sm">
-                    <Link href={`/products#${category.toLowerCase().replace(/\s+/g, '-')}`}>
-                      View {category} <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+          <SectionTitle title="Product Classification" subtitle="Our Expertise in Manufacturing and Repairing Instruments" />
+          
+          <div className="flex justify-center mb-12">
+            <div className="bg-yellow-400 text-yellow-900 font-bold py-2 px-6 rounded-full shadow-lg">
+              Instruments
+            </div>
           </div>
-           <div className="text-center mt-12">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
+
+          <div className="flex justify-center items-center mb-8">
+              <div className="h-12 w-px bg-gray-400"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 text-center relative">
+            {/* Connecting lines */}
+            <div className="hidden md:block absolute top-[-3rem] left-1/4 w-1/2 h-px bg-gray-400"></div>
+            <div className="hidden md:block absolute top-[-3rem] left-1/4 h-12 w-px bg-gray-400"></div>
+            <div className="hidden md:block absolute top-[-3rem] right-1/4 h-12 w-px bg-gray-400"></div>
+
+            {/* Manufacturing Branch */}
+            <div>
+              <div className="inline-block bg-green-500 text-white font-bold py-2 px-6 rounded-full shadow-md mb-8">
+                Manufacturing
+              </div>
+              <div className="relative">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  {Object.entries(manufacturingCategories).map(([category, subcats]) => (
+                    <div key={category} className="flex flex-col items-center">
+                      <div className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md w-full mb-4">{category}</div>
+                      <div className="space-y-2 w-full">
+                        {subcats.map(sub => (
+                          <div key={sub} className="bg-orange-400 text-white py-1.5 px-3 rounded-lg shadow-sm text-sm w-full">
+                            {sub}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Repairing Branch */}
+            <div>
+              <div className="inline-block bg-green-500 text-white font-bold py-2 px-6 rounded-full shadow-md mb-8">
+                Repairing of all types of gauges & instruments
+              </div>
+              {/* This section can be built out with more details if needed */}
+              <div className="bg-muted p-4 rounded-lg shadow-inner">
+                <Wrench className="h-12 w-12 text-primary mx-auto mb-2" />
+                <p className="text-muted-foreground text-sm">We provide expert repair and calibration services for a wide range of precision instruments.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-16">
+            <Button asChild size="lg">
               <Link href="/products">
-                View All Products <ArrowRight className="ml-2 h-5 w-5" />
+                Explore All Products <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
@@ -141,7 +187,7 @@ export default function HomePage() {
               <Card key={index} className="flex flex-col">
                 <CardHeader>
                   <div className="flex items-center mb-3">
-                    <CheckCircle2 className="h-7 w-7 text-accent mr-3" />
+                    <item.icon className="h-7 w-7 text-accent mr-3" />
                     <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
                   </div>
                 </CardHeader>
@@ -174,3 +220,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+    
