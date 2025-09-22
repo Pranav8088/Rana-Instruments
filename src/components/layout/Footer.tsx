@@ -2,14 +2,18 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import Logo from '@/components/icons/Logo';
+import { getAllCategories } from '@/data/products';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const productCategories = getAllCategories();
+  const categoryToSlug = (name: string) => name.toLowerCase().replace(/\s+/g, '-');
+
 
   return (
     <footer className="bg-secondary text-secondary-foreground border-t border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-4 group">
               <Logo className="h-12 w-auto text-primary group-hover:text-accent transition-colors" />
@@ -20,9 +24,18 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-primary mb-4 font-headline">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-primary mb-4 font-headline">Products</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/products" className="text-muted-foreground hover:text-primary transition-colors">Products</Link></li>
+                <li><Link href="/products" className="text-muted-foreground hover:text-primary transition-colors">All Products</Link></li>
+                {productCategories.map(category => (
+                    <li key={category}><Link href={`/products/category/${categoryToSlug(category)}`} className="text-muted-foreground hover:text-primary transition-colors">{category}</Link></li>
+                ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold text-primary mb-4 font-headline">Company</h3>
+            <ul className="space-y-2 text-sm">
               <li><Link href="/selection-guide" className="text-muted-foreground hover:text-primary transition-colors">Selection Guide</Link></li>
               <li><Link href="/resources" className="text-muted-foreground hover:text-primary transition-colors">Resources</Link></li>
               <li><Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</Link></li>
