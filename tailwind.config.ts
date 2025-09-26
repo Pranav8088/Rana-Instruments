@@ -11,8 +11,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['var(--font-inter)', 'sans-serif'], // Use CSS variable from next/font
-        headline: ['var(--font-inter)', 'sans-serif'], // Use CSS variable from next/font
+        body: ['var(--font-roboto)', 'sans-serif'],
+        headline: ['var(--font-montserrat)', 'sans-serif'],
         code: ['monospace', 'monospace'],
       },
       colors: {

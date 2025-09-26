@@ -19,6 +19,34 @@ const repairCategory = {
   "Repairing of all types of gauges & instruments": []
 };
 
+const whyChooseUsItems = [
+    {
+      icon: CheckCircle,
+      title: 'Precision Engineered Solutions',
+      description: 'We design and manufacture custom-built measuring instruments tailored to specific industrial applications, ensuring optimal accuracy and performance.',
+    },
+    {
+      icon: CheckCircle,
+      title: 'High Accuracy & Longevity',
+      description: 'Built with advanced metrology technology and premium-grade materials, our instruments guarantee repeatable precision, wear resistance, and long-term reliability in demanding environments.',
+    },
+    {
+      icon: CheckCircle,
+      title: 'Optimized Cost-to-Performance Ratio',
+      description: 'Our gauges deliver superior accuracy and durability while maintaining cost efficiency, providing high-value solutions for precision measurement needs.',
+    },
+    {
+      icon: CheckCircle,
+      title: 'Comprehensive Service Support',
+      description: 'We offer consultation, calibration, and after-sales support, ensuring seamless integration, maintenance, and long-term operational excellence.',
+    },
+    {
+      icon: CheckCircle,
+      title: 'Industry-Specific Expertise',
+      description: 'With extensive experience in automobile, oil & gas, fabrication, power, utility, and machining industries, we provide application-driven measurement solutions tailored to industry standards and operational requirements.',
+    },
+  ];
+
 
 export default function HomePage() {
   const categories = getAllCategories();
@@ -28,14 +56,11 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground py-20 md:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-headline mb-6 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-headline mb-4 tracking-tight">
             RANA INSTRUMENT
           </h1>
-          <p className="text-xl sm:text-2xl md:text-3xl font-headline mb-4">
-            Custom Instrument Solutions
-          </p>
-          <p className="text-lg sm:text-xl text-primary-foreground/90 mb-10 max-w-3xl mx-auto">
-            Quality Parts, Expert Services & Invaluable Experience. Premier manufacturer of precision measuring instruments.
+          <p className="text-xl sm:text-2xl md:text-3xl font-headline mb-8">
+            The Measure of Excellence
           </p>
           <div className="space-x-4">
             <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
@@ -55,9 +80,9 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <SectionTitle title="Premier Manufacturer of Precision Instruments" as="h2" className="text-left mb-6" />
+              <SectionTitle title="Our Story" as="h2" className="text-left mb-6" />
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Rana Instrument specializes in custom-engineered gauges designed for high accuracy, durability, and compliance with industry standards. Our commitment to innovation and precision ensures reliable measurement solutions that enhance quality and efficiency.
+                Born from a passion for solving complex measurement challenges, Rana Instruments began its journey with a clear objective: to create custom solutions where standard instruments fall short. We started by collaborating closely with engineers on the factory floor, understanding their unique problems and crafting tools with meticulous care. This hands-on approach has grown into a legacy of trust and expertise.
               </p>
               <Button asChild variant="link" className="text-primary p-0 text-lg hover:text-accent">
                 <Link href="/about">Learn More About Us <ArrowRight className="ml-2 h-4 w-4" /></Link>
@@ -142,6 +167,31 @@ export default function HomePage() {
               </Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionTitle 
+                title="Why Choose Rana Instrument?" 
+                subtitle="Experience the Rana Instrument difference in precision and service." 
+            />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {whyChooseUsItems.map((item, index) => (
+                <Card key={index} className="flex flex-col">
+                    <CardHeader>
+                    <div className="flex items-center mb-3">
+                        <item.icon className="h-7 w-7 text-accent mr-3" />
+                        <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
+                    </div>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                    </CardContent>
+                </Card>
+                ))}
+            </div>
         </div>
       </section>
 
