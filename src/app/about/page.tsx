@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Trophy, Users, Globe, Target, Lightbulb, ShieldCheck } from 'lucide-react';
+import { Settings, Trophy, Users, Target, Lightbulb, ShieldCheck } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -57,8 +57,8 @@ export default function AboutPage() {
               <Image
                 src="https://picsum.photos/seed/workshop/800/600"
                 alt="Rana Instruments Workshop"
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{objectFit: "cover"}}
                 data-ai-hint="precision workshop"
                 className="transform transition-transform duration-500 hover:scale-105"
                 priority 
