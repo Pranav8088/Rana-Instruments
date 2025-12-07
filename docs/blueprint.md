@@ -1,3 +1,4 @@
+
 # **App Name**: Rana Instrument Solutions
 
 ## Core Features:
@@ -10,9 +11,11 @@
 
 ## Style Guidelines:
 
-- Primary color: Deep blue (#2E5DA8) to convey trust, precision, and reliability, aligning with the brand's focus on quality and expertise.
-- Background color: Light gray (#F0F4F7), providing a clean and professional backdrop that enhances readability and focuses attention on the products and information.
-- Accent color: A vibrant orange (#E58E26), draws attention to important calls-to-action and interactive elements, infusing energy.
-- Body and headline font: 'Inter', sans-serif. This font will convey a modern, machined look that aligns with the technical aspects of precision instruments
+- Background color: Off-white (#EFECE3) to provide a clean, premium, and uncluttered backdrop.
+- Primary color: Blue (#4A70A9) to convey trust, precision, and reliability, aligning with the brand's focus on quality and expertise.
+- Secondary color: Light blue (#8FABD4) for accents and secondary elements, complementing the primary blue.
+- Text color: Black (#000000) for maximum readability and a classic, professional look.
+- Body font: 'Roboto', sans-serif. A clean and modern font for readability.
+- Headline font: 'Montserrat', sans-serif. A strong and stylish font for headlines.
 - Use clean, precise icons representing product categories and application areas. Icons should be consistent in style and color to maintain a professional look.
 - Implement a clear, structured layout with ample whitespace to prevent clutter and improve readability. Prioritize a user-friendly navigation system.
