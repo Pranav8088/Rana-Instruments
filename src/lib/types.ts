@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 
 export interface ModelVariant {
   modelNo: string;
@@ -13,7 +14,7 @@ export interface Product {
   id: string;
   name: string;
   category: ProductCategory;
-  image: string;
+  image: string | StaticImageData;
   aiHint?: string; // For placeholder image search keyword
   shortDescription: string;
   longDescription?: string;

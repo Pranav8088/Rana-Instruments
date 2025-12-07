@@ -7,15 +7,20 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import type { Metadata, ResolvingMetadata } from 'next';
 
+type RouteParams = {
+  productId: string;
+};
+
 type Props = {
-  params: { productId: string };
+  params: Promise<RouteParams> | RouteParams;
 };
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const product = getProductById(params.productId);
+  const { productId } = await params;
+  const product = getProductById(productId);
 
   if (!product) {
     return {
@@ -23,17 +28,19 @@ export async function generateMetadata(
     }
   }
 
+  const ogImage = typeof product.image === 'string' ? product.image : product.image.src;
+
   return {
     title: `${product.name} | Rana Instrument Solutions`,
     description: product.shortDescription,
     openGraph: {
-        images: [product.image],
+        images: [ogImage],
     },
   }
 }
 
-export default function ProductDetailPage({ params }: Props) {
-  const { productId } = params;
+export default async function ProductDetailPage({ params }: Props) {
+  const { productId } = await params;
   const product = getProductById(productId);
   const productPortfolio = productData.productPortfolioText;
 
