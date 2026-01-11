@@ -1,4 +1,4 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  serverExternalPackages: [
+    '@opentelemetry/sdk-node',
+    'genkit',
+    '@genkit-ai/googleai',
+    '@genkit-ai/next'
+  ],
 };
 
 export default nextConfig;
