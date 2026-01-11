@@ -1,36 +1,26 @@
-import type { SVGProps } from 'react';
+"use client";
 
-const Logo = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 200 50"
-    aria-label="Rana Instrument Logo"
-    role="img"
-    {...props}
-  >
-    <rect width="200" height="50" fill="transparent" />
-    <text
-      x="10"
-      y="35"
-      fontFamily="Inter, sans-serif"
-      fontSize="28"
-      fontWeight="bold"
-      fill="currentColor"
-      className="text-primary group-hover:text-primary-foreground"
-    >
-      RANA
-    </text>
-    <text
-      x="100"
-      y="35"
-      fontFamily="Inter, sans-serif"
-      fontSize="28"
-      fill="currentColor"
-      className="text-accent"
-    >
-      INST.
-    </text>
-  </svg>
+import Image from 'next/image';
+import type { FC } from 'react';
+
+import { cn } from '@/lib/utils';
+
+interface LogoProps {
+  className?: string;
+}
+
+const Logo: FC<LogoProps> = ({ className = '' }) => (
+  <div className={cn('relative w-[150px] h-[50px]', className)}>
+    <Image
+      src="/page%20banner/lOGO.png"
+      alt="Rana Instruments Logo"
+      fill
+      priority
+      className="object-contain"
+      sizes="150px"
+    />
+    <span className="sr-only">Rana Instruments</span>
+  </div>
 );
 
 export default Logo;

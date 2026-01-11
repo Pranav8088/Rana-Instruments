@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Rss } from 'lucide-react';
 import { blogPosts, type BlogPost } from '@/data/blogPosts'; // Assuming you'll create this
+import Image from 'next/image';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -22,6 +23,18 @@ export default function BlogPage() {
         title="Blog & Knowledge Base"
         subtitle="Insights on precision measurement, industry trends, and best practices."
       />
+
+      {/* Banner Image */}
+      <div className="relative w-full h-64 md:h-80 mb-12 rounded-xl overflow-hidden shadow-xl">
+        <Image
+          src="/images/banners/blog.png"
+          alt="Engineering workspace with precision instruments"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/20" />
+      </div>
 
       <div className="mb-12 flex flex-col sm:flex-row gap-4 justify-between items-center">
         <div className="relative w-full sm:max-w-xs">

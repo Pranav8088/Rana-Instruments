@@ -1,10 +1,37 @@
 
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { CheckCircle, Settings, ArrowRight, Package, Wrench, GitBranch, ChevronDown } from 'lucide-react';
+import {
+  CheckCircle,
+  Settings,
+  ArrowRight,
+  Package,
+  Wrench,
+  GitBranch,
+  ChevronDown,
+  Target,
+  Award,
+  Clock,
+  Users,
+  Cog,
+  Factory,
+  Droplet,
+  Zap,
+  Truck,
+  Hammer,
+  Star,
+  Quote,
+  Shield,
+  Sparkles,
+  HeartHandshake,
+  BadgeCheck
+} from 'lucide-react';
 import productData from '@/data/products';
 import { getAllCategories } from '@/data/products';
 
@@ -19,58 +46,233 @@ const repairCategory = {
   "Repairing of all types of gauges & instruments": []
 };
 
-const whyChooseUsItems = [
-    {
-      icon: CheckCircle,
-      title: 'Precision Engineered Solutions',
-      description: 'We design and manufacture custom-built measuring instruments tailored to specific industrial applications, ensuring optimal accuracy and performance.',
-    },
-    {
-      icon: CheckCircle,
-      title: 'High Accuracy & Longevity',
-      description: 'Built with advanced metrology technology and premium-grade materials, our instruments guarantee repeatable precision, wear resistance, and long-term reliability in demanding environments.',
-    },
-    {
-      icon: CheckCircle,
-      title: 'Optimized Cost-to-Performance Ratio',
-      description: 'Our gauges deliver superior accuracy and durability while maintaining cost efficiency, providing high-value solutions for precision measurement needs.',
-    },
-    {
-      icon: CheckCircle,
-      title: 'Comprehensive Service Support',
-      description: 'We offer consultation, calibration, and after-sales support, ensuring seamless integration, maintenance, and long-term operational excellence.',
-    },
-    {
-      icon: CheckCircle,
-      title: 'Industry-Specific Expertise',
-      description: 'With extensive experience in automobile, oil & gas, fabrication, power, utility, and machining industries, we provide application-driven measurement solutions tailored to industry standards and operational requirements.',
-    },
-  ];
+// Data for new sections
+const clientLogos = [
+  { name: 'Automotive Partner 1', initial: 'AP' },
+  { name: 'Oil & Gas Corp', initial: 'OG' },
+  { name: 'Heavy Industries', initial: 'HI' },
+  { name: 'Power Systems', initial: 'PS' },
+  { name: 'Precision Manufacturing', initial: 'PM' },
+  { name: 'Engineering Works', initial: 'EW' },
+  { name: 'Industrial Solutions', initial: 'IS' },
+  { name: 'Tech Fabrication', initial: 'TF' },
+];
+
+// Tabbed advantages data
+const advantageTabs = [
+  {
+    id: 'precision',
+    label: 'Precision',
+    icon: Target,
+    heading: 'Micron-Level Precision',
+    description: 'Our instruments deliver ±2μm repeatability, ensuring measurement accuracy you can trust for critical applications. Every product undergoes rigorous calibration testing.',
+    points: [
+      '±2μm repeatability across all measurements',
+      'Carbide-tipped contact points for durability',
+      'Traceable calibration certificates',
+      'Temperature-compensated accuracy'
+    ],
+    image: '/images/advantages/precision.png'
+  },
+  {
+    id: 'custom',
+    label: 'Custom Solutions',
+    icon: Settings,
+    heading: 'Bespoke Engineering',
+    description: 'Standard instruments don\'t solve every problem. We design and manufacture custom gauges tailored specifically to your unique measurement challenges.',
+    points: [
+      'Custom bore gauge configurations',
+      'Application-specific probe designs',
+      'Modified measuring ranges',
+      'Industry-specific adaptations'
+    ],
+    image: '/images/advantages/custom.png'
+  },
+  {
+    id: 'quality',
+    label: 'Quality',
+    icon: Award,
+    heading: 'Certified Excellence',
+    description: 'Every instrument undergoes rigorous testing and quality checks before delivery. Our commitment to quality has earned the trust of industry leaders.',
+    points: [
+      'ISO-compliant manufacturing',
+      '100% inspection before shipping',
+      'Documented quality procedures',
+      'Material traceability'
+    ],
+    image: '/images/advantages/quality.png'
+  },
+  {
+    id: 'support',
+    label: 'Expert Support',
+    icon: Users,
+    heading: 'Dedicated Technical Team',
+    description: 'Our relationship doesn\'t end at delivery. We provide consultation, calibration, and after-sales support for seamless integration and long-term operational excellence.',
+    points: [
+      'Pre-sales technical consultation',
+      'On-site calibration services',
+      'Rapid response repair service',
+      'Training and documentation'
+    ],
+    image: '/images/advantages/support.png'
+  },
+];
+
+const industries = [
+  {
+    icon: Factory,
+    name: 'Automotive',
+    description: 'Precision gauges for engine, transmission, and component manufacturing.',
+    color: 'bg-emerald-500',
+  },
+  {
+    icon: Droplet,
+    name: 'Oil & Gas',
+    description: 'Specialized instruments for valve bodies, pipelines, and refinery equipment.',
+    color: 'bg-amber-500',
+  },
+  {
+    icon: Cog,
+    name: 'Heavy Machinery',
+    description: 'Large-diameter bore gauges for industrial equipment manufacturing.',
+    color: 'bg-slate-600',
+  },
+  {
+    icon: Zap,
+    name: 'Power & Utilities',
+    description: 'Measurement solutions for turbines, generators, and power equipment.',
+    color: 'bg-blue-500',
+  },
+  {
+    icon: Hammer,
+    name: 'Fabrication',
+    description: 'Custom checking gauges for specialized fabrication requirements.',
+    color: 'bg-orange-500',
+  },
+];
+
+const stats = [
+  { value: '15+', label: 'Years Experience', suffix: '' },
+  { value: '500+', label: 'Products Delivered', suffix: '' },
+  { value: '100+', label: 'Happy Clients', suffix: '' },
+  { value: '5', label: 'Industries Served', suffix: '+' },
+];
+
+const testimonials = [
+  {
+    quote: "Rana Instruments delivered a custom bore gauge that solved our complex measurement challenge. The precision and build quality exceeded our expectations.",
+    author: "Manufacturing Head",
+    company: "Leading Automotive OEM",
+    rating: 5,
+  },
+  {
+    quote: "Their expertise in groove checking gauges is unmatched. The after-sales support and calibration services make them our preferred partner.",
+    author: "Quality Manager",
+    company: "Oil & Gas Equipment Manufacturer",
+    rating: 5,
+  },
+  {
+    quote: "Fast delivery, excellent precision, and great customer service. Rana Instruments understands the needs of the industry.",
+    author: "Production Engineer",
+    company: "Heavy Machinery Company",
+    rating: 5,
+  },
+];
+
+// Process steps for "Why Choose Us" section
+const processSteps = [
+  {
+    step: '01',
+    icon: HeartHandshake,
+    title: 'Consultation',
+    description: 'We understand your measurement challenges and requirements through detailed technical consultation.',
+  },
+  {
+    step: '02',
+    icon: Settings,
+    title: 'Custom Design',
+    description: 'Our engineers design a bespoke solution tailored to your specific application needs.',
+  },
+  {
+    step: '03',
+    icon: Cog,
+    title: 'Precision Manufacturing',
+    description: 'Instruments are manufactured with premium materials and rigorous quality control.',
+  },
+  {
+    step: '04',
+    icon: BadgeCheck,
+    title: 'Calibration & Testing',
+    description: 'Every instrument undergoes comprehensive calibration and verification testing.',
+  },
+  {
+    step: '05',
+    icon: Truck,
+    title: 'Delivery & Support',
+    description: 'Fast, secure delivery with ongoing technical support and calibration services.',
+  },
+];
 
 
 export default function HomePage() {
   const categories = getAllCategories();
-  
+  const [activeTab, setActiveTab] = useState('precision');
+  const activeAdvantage = advantageTabs.find(tab => tab.id === activeTab) || advantageTabs[0];
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground py-20 md:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-headline mb-4 tracking-tight">
+      <section className="relative overflow-hidden text-primary-foreground py-32 md:py-60 min-h-[520px] md:min-h-[720px] flex items-center">
+        <Image
+          src="/page%20banner/home%20page%20banner%20-%20Copy.png"
+          alt="Precision instruments showcased in Rana Instrument workshop"
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" aria-hidden="true" />
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-right max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-headline mb-4 tracking-tight text-[#FF9100]">
             RANA INSTRUMENT
           </h1>
-          <p className="text-xl sm:text-2xl md:text-3xl font-headline mb-8">
+          <p className="text-xl sm:text-2xl md:text-3xl font-headline mb-8 text-primary-foreground/90">
             The Measure of Excellence
           </p>
-          <div className="space-x-4">
-            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          <div className="flex flex-wrap justify-end gap-4">
+            <Button asChild size="lg" className="bg-gradient-to-r from-[#0063A3] to-[#69C3FF] hover:from-[#004D7F] hover:to-[#4FA8E6] text-white font-semibold shadow-lg shadow-blue-500/30">
               <Link href="/products">
                 Explore Products <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+            <Button
+              asChild
+              size="lg"
+              className="bg-[#FF9100] text-white hover:bg-[#E68200] border-2 border-white/20 shadow-lg"
+            >
               <Link href="/contact">Contact Us</Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Client Logos Auto-Scroller */}
+      <section className="py-12 bg-white border-y border-border/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <p className="text-center text-muted-foreground font-medium uppercase tracking-wider text-sm">
+            Trusted by Industry Leaders
+          </p>
+        </div>
+        <div className="relative overflow-hidden">
+          <div className="flex animate-scroll-left">
+            {/* First set of logos */}
+            {[...clientLogos, ...clientLogos].map((client, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 mx-8 w-32 h-20 bg-secondary/50 rounded-lg flex items-center justify-center hover:bg-secondary transition-colors"
+              >
+                <span className="text-2xl font-bold text-primary">{client.initial}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -90,53 +292,124 @@ export default function HomePage() {
             </div>
             <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="https://picsum.photos/seed/workshop/800/600"
+                src="/page%20banner/Home%20page%20about%20us.png"
                 alt="Rana Instruments Workshop"
-                layout="fill"
-                objectFit="cover"
+                fill
                 data-ai-hint="precision workshop"
-                className="transform transition-transform duration-500 hover:scale-105"
-                priority 
+                className="object-cover transform transition-transform duration-500 hover:scale-105"
+                priority
               />
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Product Classification Section */}
-      <section className="py-16 md:py-24 bg-secondary">
+
+      {/* Advantages Section - Tabbed Content Switcher */}
+      <section className="py-16 md:py-24 bg-[#f4f6fb]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[#0063A3] uppercase tracking-wider text-sm font-semibold mb-2">Technical Advantages</p>
+            <h2 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-foreground">Why Industry Leaders Choose Us</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Precision engineering backed by decades of expertise and unwavering commitment to quality
+            </p>
+          </div>
+
+          {/* Tab Navigation */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {advantageTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`tab-btn flex items-center gap-2 ${activeTab === tab.id ? 'active' : ''}`}
+              >
+                <tab.icon className="h-4 w-4" />
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Content */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text content */}
+            <div key={activeTab} className="animate-fadeIn">
+              <h3 className="text-2xl md:text-3xl font-bold font-headline mb-4 text-foreground">
+                {activeAdvantage.heading}
+              </h3>
+              <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
+                {activeAdvantage.description}
+              </p>
+              <ul className="space-y-3 mb-8">
+                {activeAdvantage.points.map((point, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-[#0063A3] mt-0.5 shrink-0" />
+                    <span className="text-foreground">{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild className="bg-gradient-to-r from-[#0063A3] to-[#69C3FF] hover:from-[#004D7F] hover:to-[#4FA8E6] text-white shadow-lg shadow-blue-500/20">
+                <Link href="/contact">
+                  Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Right side - Image */}
+            <div key={`img-${activeTab}`} className="relative h-80 md:h-[450px] rounded-xl overflow-hidden shadow-2xl animate-fadeIn">
+              <Image
+                src={activeAdvantage.image}
+                alt={activeAdvantage.heading}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Classification Section */}
+      <section className="py-16 md:py-24 bg-secondary/10 relative overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/backgrounds/product-classification.png"
+            alt="Engineering background"
+            fill
+            className="object-cover opacity-10"
+          />
+        </div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionTitle title="Product Classification" subtitle="Our Expertise in Manufacturing and Repairing Instruments" />
-          
+
           <div className="flex justify-center mb-12">
-            <div className="bg-yellow-400 text-yellow-900 font-bold py-2 px-6 rounded-full shadow-lg">
+            <div className="bg-gradient-to-r from-[#0063A3] to-[#69C3FF] text-white font-bold py-2 px-6 rounded-full shadow-lg shadow-blue-500/30">
               Instruments
             </div>
           </div>
 
           <div className="flex justify-center items-center mb-8">
-              <div className="h-12 w-px bg-gray-400"></div>
+            <div className="h-12 w-px bg-[#0063A3]"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 text-center relative">
             {/* Connecting lines */}
-            <div className="hidden md:block absolute top-[-3rem] left-1/4 w-1/2 h-px bg-gray-400"></div>
-            <div className="hidden md:block absolute top-[-3rem] left-1/4 h-12 w-px bg-gray-400"></div>
-            <div className="hidden md:block absolute top-[-3rem] right-1/4 h-12 w-px bg-gray-400"></div>
+            <div className="hidden md:block absolute top-[-3rem] left-1/4 w-1/2 h-px bg-[#0063A3]"></div>
+            <div className="hidden md:block absolute top-[-3rem] left-1/4 h-12 w-px bg-[#0063A3]"></div>
+            <div className="hidden md:block absolute top-[-3rem] right-1/4 h-12 w-px bg-[#0063A3]"></div>
 
             {/* Manufacturing Branch */}
             <div>
-              <div className="inline-block bg-green-500 text-white font-bold py-2 px-6 rounded-full shadow-md mb-8">
+              <div className="inline-block bg-gradient-to-r from-[#0063A3] to-[#69C3FF] text-white font-bold py-2 px-6 rounded-full shadow-md shadow-blue-500/30 mb-8">
                 Manufacturing
               </div>
               <div className="relative">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {Object.entries(manufacturingCategories).map(([category, subcats]) => (
                     <div key={category} className="flex flex-col items-center">
-                      <div className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md w-full mb-4">{category}</div>
+                      <div className="bg-[#0063A3] text-white py-2 px-4 rounded-lg shadow-md w-full mb-4">{category}</div>
                       <div className="space-y-2 w-full">
                         {subcats.map(sub => (
-                          <div key={sub} className="bg-orange-400 text-white py-1.5 px-3 rounded-lg shadow-sm text-sm w-full">
+                          <div key={sub} className="bg-[#FF9100] text-white py-1.5 px-3 rounded-lg shadow-sm text-sm w-full font-medium">
                             {sub}
                           </div>
                         ))}
@@ -149,19 +422,19 @@ export default function HomePage() {
 
             {/* Repairing Branch */}
             <div>
-              <div className="inline-block bg-green-500 text-white font-bold py-2 px-6 rounded-full shadow-md mb-8">
+              <div className="inline-block bg-gradient-to-r from-[#0063A3] to-[#69C3FF] text-white font-bold py-2 px-6 rounded-full shadow-md shadow-blue-500/30 mb-8">
                 Repairing of all types of gauges & instruments
               </div>
               {/* This section can be built out with more details if needed */}
-              <div className="bg-muted p-4 rounded-lg shadow-inner">
-                <Wrench className="h-12 w-12 text-primary mx-auto mb-2" />
+              <div className="bg-secondary p-6 rounded-lg shadow-inner">
+                <Wrench className="h-12 w-12 text-[#0063A3] mx-auto mb-2" />
                 <p className="text-muted-foreground text-sm">We provide expert repair and calibration services for a wide range of precision instruments.</p>
               </div>
             </div>
           </div>
 
           <div className="text-center mt-16">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="bg-gradient-to-r from-[#0063A3] to-[#69C3FF] hover:from-[#004D7F] hover:to-[#4FA8E6] text-white shadow-lg shadow-blue-500/30">
               <Link href="/products">
                 Explore All Products <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -170,42 +443,131 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-16 md:py-24 bg-background">
+      {/* Industries Served Section */}
+      <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionTitle 
-                title="Why Choose Rana Instrument?" 
-                subtitle="Experience the Rana Instrument difference in precision and service." 
-            />
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {whyChooseUsItems.map((item, index) => (
-                <Card key={index} className="flex flex-col">
-                    <CardHeader>
-                    <div className="flex items-center mb-3">
-                        <item.icon className="h-7 w-7 text-accent mr-3" />
-                        <CardTitle className="font-headline text-xl">{item.title}</CardTitle>
-                    </div>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                    <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
-                    </CardContent>
-                </Card>
-                ))}
-            </div>
+          <SectionTitle
+            title="Industries We Serve"
+            subtitle="Delivering precision measurement solutions across diverse sectors"
+          />
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {industries.map((industry, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl p-6 shadow-lg hover-lift text-center group"
+              >
+                <div className={`w-16 h-16 ${industry.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                  <industry.icon className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="font-headline text-lg font-semibold mb-2 text-foreground">{industry.name}</h3>
+                <p className="text-muted-foreground text-sm">{industry.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics Counter Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline text-[#69C3FF] mb-2">
+                  {stat.value}{stat.suffix}
+                </div>
+                <p className="text-white/80 text-sm md:text-base uppercase tracking-wider">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us - Process Cards with Connectors */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle
+            title="Why Choose Rana Instrument?"
+            subtitle="Our proven process ensures precision and reliability at every step"
+          />
+
+          {/* Process Cards Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-12">
+            {processSteps.map((step, index) => (
+              <div key={index} className="process-card-wrapper">
+                <div className="process-card">
+                  {/* Watermark Number */}
+                  <span className="process-watermark">{step.step}</span>
+
+                  {/* Icon */}
+                  <div className="process-icon w-14 h-14 bg-[#0063A3] rounded-lg flex items-center justify-center mb-4 transition-all duration-300">
+                    <step.icon className="h-7 w-7 text-white transition-colors duration-300" />
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="process-title font-headline text-xl font-semibold mb-2 text-foreground transition-colors duration-300">
+                    {step.title}
+                  </h3>
+                  <p className="process-desc text-muted-foreground text-sm leading-relaxed transition-colors duration-300">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Result Box */}
+          <div className="result-box max-w-2xl mx-auto">
+            <Sparkles className="h-10 w-10 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold font-headline mb-2">Precision Delivered</h3>
+            <p className="text-white/90">
+              The result: Custom instruments that meet your exact specifications with ±2μm precision, backed by comprehensive documentation and ongoing support.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-16 md:py-24 bg-secondary/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle
+            title="What Our Clients Say"
+            subtitle="Trusted by industry professionals across the globe"
+          />
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl p-8 shadow-lg relative hover-lift"
+              >
+                <Quote className="absolute top-4 right-4 h-10 w-10 text-[#0063A3]/20" />
+                <div className="flex mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 text-[#FF9100] fill-[#FF9100]" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
+                <div className="border-t pt-4">
+                  <p className="font-semibold text-foreground">{testimonial.author}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.company}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Call to Action - Custom Solutions */}
-      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-[#0063A3] via-[#0077C7] to-[#69C3FF] text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Settings className="h-16 w-16 mx-auto mb-6 text-accent" />
+          <Settings className="h-16 w-16 mx-auto mb-6 text-[#FF9100]" />
           <h2 className="text-3xl md:text-4xl font-bold font-headline mb-6">
             Need Custom Instrument Solutions?
           </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/90 mb-10 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto">
             We specialize in custom-engineered gauges designed for high accuracy and durability. Let's discuss your unique requirements.
           </p>
-          <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          <Button asChild size="lg" className="bg-[#FF9100] hover:bg-[#E68200] text-white font-semibold shadow-xl shadow-orange-500/30">
             <Link href="/contact">
               Request a Custom Solution <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
@@ -215,3 +577,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+

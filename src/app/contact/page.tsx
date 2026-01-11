@@ -7,16 +7,28 @@ import Image from 'next/image';
 export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-      <SectionTitle 
-        title="Contact Us" 
-        subtitle="We're here to help with your precision measurement needs. Reach out to us today!" 
+      <SectionTitle
+        title="Contact Us"
+        subtitle="We're here to help with your precision measurement needs. Reach out to us today!"
       />
+
+      {/* Banner Image */}
+      <div className="relative w-full h-64 md:h-80 mb-12 rounded-xl overflow-hidden shadow-xl">
+        <Image
+          src="/images/banners/contact.png"
+          alt="Global connectivity and support"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
+      </div>
 
       <div className="grid lg:grid-cols-5 gap-8 md:gap-12">
         <div className="lg:col-span-3">
           <Card className="shadow-xl rounded-lg">
             <CardHeader>
-              <CardTitle className="font-headline text-2xl text-primary">Send Us an Inquiry</CardTitle>
+              <CardTitle className="font-headline text-2xl text-black">Send Us an Inquiry</CardTitle>
             </CardHeader>
             <CardContent>
               <InquiryForm />
@@ -27,7 +39,7 @@ export default function ContactPage() {
         <div className="lg:col-span-2 space-y-6">
           <Card className="shadow-lg rounded-lg">
             <CardHeader>
-              <CardTitle className="font-headline text-xl text-primary flex items-center">
+              <CardTitle className="font-headline text-xl text-black flex items-center">
                 <MapPin className="mr-3 h-6 w-6 text-accent" /> Office Address
               </CardTitle>
             </CardHeader>
@@ -40,7 +52,7 @@ export default function ContactPage() {
 
           <Card className="shadow-lg rounded-lg">
             <CardHeader>
-              <CardTitle className="font-headline text-xl text-primary flex items-center">
+              <CardTitle className="font-headline text-xl text-black flex items-center">
                 <Phone className="mr-3 h-6 w-6 text-accent" /> Phone Lines
               </CardTitle>
             </CardHeader>
@@ -53,7 +65,7 @@ export default function ContactPage() {
 
           <Card className="shadow-lg rounded-lg">
             <CardHeader>
-              <CardTitle className="font-headline text-xl text-primary flex items-center">
+              <CardTitle className="font-headline text-xl text-black flex items-center">
                 <Mail className="mr-3 h-6 w-6 text-accent" /> Email Us
               </CardTitle>
             </CardHeader>
@@ -67,15 +79,15 @@ export default function ContactPage() {
       <div className="mt-16">
         <Card className="overflow-hidden shadow-xl rounded-lg">
           <div className="relative h-72 md:h-96 w-full">
-            <Image 
-              src="https://placehold.co/1200x400.png" 
-              alt="Map showing Rana Instrument location" 
-              layout="fill"
-              objectFit="cover"
+            <Image
+              src="https://placehold.co/1200x400.png"
+              alt="Map showing Rana Instrument location"
+              fill
+              className="object-cover"
               data-ai-hint="map location"
             />
           </div>
-           <CardContent className="p-4 bg-muted text-center">
+          <CardContent className="p-4 bg-muted text-center">
             <p className="text-sm text-muted-foreground">Visit us or get in touch - we look forward to hearing from you!</p>
           </CardContent>
         </Card>

@@ -13,7 +13,7 @@ export default function SectionTitle({ title, subtitle, as = 'h2', className, ..
     <div className="mb-8 md:mb-12 text-center">
       <Tag
         className={cn(
-          'font-headline font-bold tracking-tight text-primary',
+          'font-headline font-bold tracking-tight text-black',
           {
             'text-4xl md:text-5xl': as === 'h1',
             'text-3xl md:text-4xl': as === 'h2',

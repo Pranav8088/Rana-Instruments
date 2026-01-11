@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Gauge, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -42,7 +42,7 @@ export default function Navbar() {
     if (isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   if (!isMounted) {
@@ -51,8 +51,13 @@ export default function Navbar() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Link href="/" className="flex items-center group" aria-label="Rana Instrument Solutions Home">
-              <Gauge className="h-10 w-10 text-primary mr-2 group-hover:text-accent transition-colors" />
-              <Logo className="h-10 w-auto hidden sm:block" />
+              <div className="hidden sm:block relative w-[260px] h-16">
+                <img
+                  src="/images/Rana Logo.png"
+                  alt="Rana Instrument Logo"
+                  className="object-contain w-full h-full"
+                />
+              </div>
               <span className="sm:hidden font-bold text-xl text-primary group-hover:text-accent transition-colors">RANA</span>
             </Link>
             <div className="md:hidden">
@@ -63,7 +68,7 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-    ); 
+    );
   }
 
   const isProductRoute = pathname.startsWith('/products');
@@ -121,9 +126,14 @@ export default function Navbar() {
     <header className="bg-card shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center group focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-card rounded-md" aria-label="Rana Instrument Solutions Home">
-            <Gauge className="h-10 w-10 text-primary mr-2 group-hover:text-accent transition-colors" />
-            <Logo className="h-10 w-auto hidden sm:block" />
+          <Link href="/" className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-card rounded-md" aria-label="Rana Instrument Solutions Home">
+            <div className="hidden sm:block relative w-[260px] h-16">
+              <img
+                src="/images/Rana Logo.png"
+                alt="Rana Instrument Logo"
+                className="object-contain w-full h-full"
+              />
+            </div>
             <span className="sm:hidden font-bold text-xl text-primary group-hover:text-accent transition-colors">RANA</span>
           </Link>
 
@@ -143,17 +153,22 @@ export default function Navbar() {
                 <SheetHeader className="p-4 border-b">
                   <SheetTitle className="flex items-center">
                     <Link href="/" className="flex items-center group" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Gauge className="h-8 w-8 text-primary mr-2 group-hover:text-accent transition-colors" />
-                      <Logo className="h-8 w-auto" />
+                      <div className="relative w-[220px] h-14">
+                        <img
+                          src="/images/Rana Logo.png"
+                          alt="Rana Instrument Logo"
+                          className="object-contain w-full h-full"
+                        />
+                      </div>
                     </Link>
                   </SheetTitle>
-                   <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} aria-label="Close main menu" className="absolute top-3 right-3">
+                  <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} aria-label="Close main menu" className="absolute top-3 right-3">
                     <X className="h-5 w-5" />
                   </Button>
                 </SheetHeader>
                 <nav className="flex flex-col space-y-2 p-4">
                   {mainNavItems.map((item) => (
-                     <Link
+                    <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -168,18 +183,18 @@ export default function Navbar() {
                       {item.label}
                     </Link>
                   ))}
-                   <div className="border-b my-2"></div>
-                   <Link href="/products"  onClick={() => setIsMobileMenuOpen(false)} className={cn('px-3 py-2 rounded-md text-base font-medium', isProductRoute ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-secondary')}>All Products</Link>
-                   {productCategories.map((category) => (
-                      <Link
-                        key={category}
-                        href={`/products/category/${categoryToSlug(category)}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:bg-secondary hover:text-foreground ml-4"
-                      >
-                       - {category}
-                      </Link>
-                   ))}
+                  <div className="border-b my-2"></div>
+                  <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className={cn('px-3 py-2 rounded-md text-base font-medium', isProductRoute ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-secondary')}>All Products</Link>
+                  {productCategories.map((category) => (
+                    <Link
+                      key={category}
+                      href={`/products/category/${categoryToSlug(category)}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:bg-secondary hover:text-foreground ml-4"
+                    >
+                      - {category}
+                    </Link>
+                  ))}
                 </nav>
               </SheetContent>
             </Sheet>

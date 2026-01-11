@@ -49,7 +49,8 @@ export default async function ProductDetailPage({ params }: Props) {
   }
   
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div className="bg-[#EFECE3] min-h-screen">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
       <div className="mb-8">
         <Button variant="outline" asChild>
           <Link href="/products">
@@ -57,7 +58,8 @@ export default async function ProductDetailPage({ params }: Props) {
           </Link>
         </Button>
       </div>
-      <ProductDetailClient product={product} productPortfolio={productPortfolio} />
+        <ProductDetailClient product={product} productPortfolio={productPortfolio} />
+      </div>
     </div>
   );
 }

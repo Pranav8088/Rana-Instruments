@@ -48,6 +48,11 @@ export const metadata: Metadata = {
     title: 'Rana Instrument | The Measure of Excellence',
     description: 'Premier manufacturer of custom precision measuring instruments.',
   },
+  icons: {
+    icon: '/images/Rana Logo.png',
+    shortcut: '/images/Rana Logo.png',
+    apple: '/images/Rana Logo.png',
+  },
   robots: {
     index: true,
     follow: true,

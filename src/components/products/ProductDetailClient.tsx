@@ -15,8 +15,14 @@ interface ProductDetailClientProps {
 }
 
 export default function ProductDetailClient({ product, productPortfolio }: ProductDetailClientProps) {
+  const variants = product.modelVariants ?? []
+  const hasVariants = variants.length > 0
+  const hasDepthReach = variants.some((variant) => variant.depthReach)
+  const hasContactPoints = variants.some((variant) => variant.contactPoints)
+  const hasCustomDetails = variants.some((variant) => variant.custom)
+
   return (
-    <div className="space-y-8 md:space-y-12">
+    <div className="space-y-8 md:space-y-12 bg-[#EFECE3]">
       <Card className="shadow-xl rounded-lg overflow-hidden">
         <CardContent className="p-0 md:p-0">
           <div className="grid md:grid-cols-5 gap-0 md:gap-0">
@@ -32,9 +38,9 @@ export default function ProductDetailClient({ product, productPortfolio }: Produ
               />
             </div>
             
-            <div className="md:col-span-2 p-6 md:p-8 space-y-4 bg-background">
-              <Badge variant="outline" className="text-sm py-1 px-3 border-primary text-primary bg-primary/10">{product.category}</Badge>
-              <h1 className="text-3xl md:text-4xl font-bold font-headline text-primary">{product.name}</h1>
+            <div className="md:col-span-2 p-6 md:p-8 space-y-4 bg-[#EFECE3]">
+              <Badge variant="outline" className="text-sm py-1 px-3 border-primary text-black bg-primary/10">{product.category}</Badge>
+              <h1 className="text-3xl md:text-4xl font-bold font-headline text-black">{product.name}</h1>
               <p className="text-base md:text-lg text-foreground/90 leading-relaxed">
                 {product.longDescription || product.shortDescription}
               </p>
@@ -46,7 +52,7 @@ export default function ProductDetailClient({ product, productPortfolio }: Produ
       {product.customizationOptions && (
         <Card className="shadow-lg rounded-lg">
           <CardHeader>
-            <CardTitle className="text-xl font-headline flex items-center text-primary">
+            <CardTitle className="text-xl font-headline flex items-center text-black">
               <Settings className="mr-2.5 h-6 w-6 text-accent" /> Customization Options
             </CardTitle>
           </CardHeader>
@@ -59,7 +65,7 @@ export default function ProductDetailClient({ product, productPortfolio }: Produ
       {product.features && product.features.length > 0 && (
         <Card className="shadow-lg rounded-lg">
           <CardHeader>
-            <CardTitle className="text-xl font-headline flex items-center text-primary"><ListChecks className="mr-2.5 h-6 w-6 text-accent" /> Key Features</CardTitle>
+            <CardTitle className="text-xl font-headline flex items-center text-black"><ListChecks className="mr-2.5 h-6 w-6 text-accent" /> Key Features</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
@@ -77,7 +83,7 @@ export default function ProductDetailClient({ product, productPortfolio }: Produ
       {product.specifications && Object.keys(product.specifications).length > 0 && (
          <Card className="shadow-lg rounded-lg">
           <CardHeader>
-            <CardTitle className="text-xl font-headline flex items-center text-primary"><SlidersHorizontal className="mr-2.5 h-6 w-6 text-accent" /> Technical Specifications</CardTitle>
+            <CardTitle className="text-xl font-headline flex items-center text-black"><SlidersHorizontal className="mr-2.5 h-6 w-6 text-accent" /> Technical Specifications</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -92,10 +98,10 @@ export default function ProductDetailClient({ product, productPortfolio }: Produ
         </Card>
       )}
 
-      {product.modelVariants && product.modelVariants.length > 0 && (
+      {hasVariants && (
         <Card className="shadow-lg rounded-lg">
           <CardHeader>
-            <CardTitle className="text-xl font-headline flex items-center text-primary"><Tags className="mr-2.5 h-6 w-6 text-accent" /> Model Variants</CardTitle>
+            <CardTitle className="text-xl font-headline flex items-center text-black"><Tags className="mr-2.5 h-6 w-6 text-accent" /> Model Variants</CardTitle>
             <CardDescription className="text-muted-foreground">Available models and their key specifications.</CardDescription>
           </CardHeader>
           <CardContent className="overflow-x-auto">
@@ -105,22 +111,22 @@ export default function ProductDetailClient({ product, productPortfolio }: Produ
                   <TableHead className="whitespace-nowrap font-semibold">Model No.</TableHead>
                   <TableHead className="whitespace-nowrap">Measuring Range</TableHead>
                   <TableHead className="whitespace-nowrap">Repeatability</TableHead>
-                  {product.modelVariants.some(v => v.depthReach) && <TableHead className="whitespace-nowrap">Depth Reach</TableHead>}
-                  {product.modelVariants.some(v => v.contactPoints) && <TableHead className="whitespace-nowrap">Contact Points</TableHead>}
+                  {hasDepthReach && <TableHead className="whitespace-nowrap">Depth Reach</TableHead>}
+                  {hasContactPoints && <TableHead className="whitespace-nowrap">Contact Points</TableHead>}
                   <TableHead className="whitespace-nowrap">Accuracy</TableHead>
-                  {product.modelVariants.some(v => v.custom) && <TableHead className="whitespace-nowrap">Custom Details</TableHead>}
+                  {hasCustomDetails && <TableHead className="whitespace-nowrap">Custom Details</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {product.modelVariants.map((variant) => (
+                {variants.map((variant) => (
                   <TableRow key={variant.modelNo} className="hover:bg-muted/30">
                     <TableCell className="font-medium text-foreground">{variant.modelNo}</TableCell>
                     <TableCell>{variant.measuringRange}</TableCell>
                     <TableCell>{variant.repeatability}</TableCell>
-                    {product.modelVariants.some(v => v.depthReach) && <TableCell>{variant.depthReach || 'N/A'}</TableCell>}
-                    {product.modelVariants.some(v => v.contactPoints) && <TableCell>{variant.contactPoints || 'N/A'}</TableCell>}
+                    {hasDepthReach && <TableCell>{variant.depthReach || 'N/A'}</TableCell>}
+                    {hasContactPoints && <TableCell>{variant.contactPoints || 'N/A'}</TableCell>}
                     <TableCell>{variant.accuracy}</TableCell>
-                    {product.modelVariants.some(v => v.custom) && <TableCell>{variant.custom || 'N/A'}</TableCell>}
+                    {hasCustomDetails && <TableCell>{variant.custom || 'N/A'}</TableCell>}
                   </TableRow>
                 ))}
               </TableBody>
@@ -132,7 +138,7 @@ export default function ProductDetailClient({ product, productPortfolio }: Produ
       {/* Placeholder for Downloadable Documents */}
       <Card className="shadow-lg rounded-lg">
         <CardHeader>
-          <CardTitle className="text-xl font-headline flex items-center text-primary"><Download className="mr-2.5 h-6 w-6 text-accent" /> Technical Documents</CardTitle>
+          <CardTitle className="text-xl font-headline flex items-center text-black"><Download className="mr-2.5 h-6 w-6 text-accent" /> Technical Documents</CardTitle>
           <CardDescription className="text-muted-foreground">Download calibration certificates and technical datasheets.</CardDescription>
         </CardHeader>
         <CardContent>
